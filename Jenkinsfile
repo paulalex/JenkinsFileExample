@@ -25,27 +25,31 @@ pipeline {
       }
     }
     
+    stage("Build") {
+      parallel {
+          stage("Build Service A") {
+            when { changeset "service_a/*" }
+            steps {
+              echo "Building Service A"
+            }
+          }
 
-    stage("Build Service A") {
-      when { changeset "service_a/*" }
-      steps {
-        echo "Building Service A"
+          stage("Build Service B") {
+            when { changeset "service_b/*" }
+            steps {
+              echo "Building Service B"
+            }
+          }
+
+          stage("Build Service C") {
+            when { changeset "service_c/*" }
+            steps {
+              echo "Building Service C"
+            }
+          }
       }
     }
-
-    stage("Build Service B") {
-      when { changeset "service_b/*" }
-      steps {
-        echo "Building Service B"
-      }
-    }
-
-    stage("Build Service C") {
-      when { changeset "service_c/*" }
-      steps {
-        echo "Building Service C"
-      }
-    }
+    
 
     stage("deploy") {
       when {
