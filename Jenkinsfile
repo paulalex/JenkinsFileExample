@@ -2,23 +2,30 @@ pipeline {
   agent any
 
   stages {
-    stage("Test Service A") {
-      steps {
-        echo "Testing Service A"
-      }
-    }
+    stage("Test") {
+      matrix {
+        stages {
+          stage("Test Service A") {
+            steps {
+              echo "Testing Service A"
+            }
+          }
 
-    stage("Test Service B") {
-      steps {
-        echo "Testing Service B"
-      }
-    }
+          stage("Test Service B") {
+            steps {
+              echo "Testing Service B"
+            }
+          }
 
-    stage("Test Service C") {
-      steps {
-        echo "Testing Service C"
+          stage("Test Service C") {
+            steps {
+              echo "Testing Service C"
+            }
+          }
+        }
       }
     }
+    
 
     stage("Build Service A") {
       when { changeset "service_a/*" }
