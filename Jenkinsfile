@@ -42,6 +42,13 @@ pipeline {
     }
 
     stage("deploy") {
+      when {
+        anyOf {
+          changeset "service_a/*"
+          changeset "service_b/*"
+          changeset "service_c/*"
+        }
+      }
       steps {
         echo "Deploying Application"
       }
@@ -50,6 +57,8 @@ pipeline {
     stage("smoke_test") {
       steps {
         echo "Smoke Testing Application"
+
+        sh 'printenv'
       }
     }
   }
