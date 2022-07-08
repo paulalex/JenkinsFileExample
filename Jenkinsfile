@@ -4,6 +4,12 @@ pipeline {
   stages {
     stage("Test") {
       matrix {
+        axes {
+            axis {
+                name "PLATFORM"
+                values "linux"
+            }
+        }
         stages {
           stage("Test Service A") {
             steps {
