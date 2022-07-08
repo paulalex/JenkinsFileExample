@@ -2,15 +2,42 @@ pipeline {
   agent any
 
   stages {
-    stage("test") {
+    stage("Test Service A") {
       steps {
-        echo "Testing Application"
+        echo "Testing Service A"
       }
     }
 
-    stage("build") {
+    stage("Test Service B") {
       steps {
-        echo "Building Application"
+        echo "Testing Service B"
+      }
+    }
+
+    stage("Test Service C") {
+      steps {
+        echo "Testing Service C"
+      }
+    }
+
+    stage("Build Service A") {
+      when { changeset "service_a/*" }
+      steps {
+        echo "Building Service A"
+      }
+    }
+
+    stage("Build Service B") {
+      when { changeset "service_b/*" }
+      steps {
+        echo "Building Service B"
+      }
+    }
+
+    stage("Build Service C") {
+      when { changeset "service_c/*" }
+      steps {
+        echo "Building Service C"
       }
     }
 
